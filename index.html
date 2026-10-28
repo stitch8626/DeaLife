@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DiaLife — помощник при диабете</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="header">
+  <a class="brand" href="#home" data-go="home">
+    <svg class="logo" viewBox="0 0 40 40" aria-hidden="true">
+      <path d="M20 3c4 4 6 7 0 14-6-7-4-10 0-14z" fill="#467599"/>
+      <path d="M37 20c-4 4-7 6-14 0 7-6 10-4 14 0z" fill="#9ED8DB"/>
+      <path d="M20 37c-4-4-6-7 0-14 6 7 4 10 0 14z" fill="#D64045"/>
+      <path d="M3 20c4-4 7-6 14 0-7 6-10 4-14 0z" fill="#1D3354"/>
+    </svg>
+    <span>Dia<b>Life</b></span>
+  </a>
+  <nav class="nav" aria-label="Основное меню">
+    <button data-go="home" class="active">Главная</button>
+    <button data-go="sugar">Сахар</button>
+    <button data-go="food">Еда и ХЕ</button>
+    <button data-go="learn">Обучение</button>
+    <button data-go="ai">AI-помощник</button>
+  </nav>
+</header>
+
+<main class="main">
+  <!-- ГЛАВНАЯ -->
+  <section id="home" class="screen active">
+    <p class="muted" id="hello">Добрый день!</p>
+    <h1>Ваш день с диабетом — под контролем</h1>
+    <div class="cards">
+      <article class="card"><h3>Последний сахар</h3><p class="big" id="lastGlu">—</p><p class="muted" id="lastGluNote">Замеров пока нет</p></article>
+      <article class="card"><h3>Среднее за 7 дней</h3><p class="big" id="avgGlu">—</p><p class="muted" id="inRange">В целевом диапазоне: —</p></article>
+      <article class="card"><h3>ХЕ сегодня</h3><p class="big" id="xeToday">0</p><p class="muted">Сохранённые приёмы пищи</p></article>
+    </div>
+    <div class="row">
+      <button class="btn" data-go="sugar">+ Добавить замер</button>
+      <button class="btn ghost" data-go="food">Сфотографировать еду</button>
+    </div>
+    <label class="field">Ваш тип диабета
+      <select id="dtype"><option value="1">1 тип</option><option value="2">2 тип</option></select>
+    </label>
+  </section>
+
+  <!-- САХАР -->
+  <section id="sugar" class="screen">
+    <h1>Дневник сахара</h1>
+    <div class="panel">
+      <div class="row">
+        <label class="field grow">Уровень глюкозы, ммоль/л
+          <input id="gluVal" type="number" step="0.1" min="1" max="40" placeholder="например, 6.2"></label>
+        <label class="field grow">Когда измерили
+          <select id="gluWhen"><option>Натощак</option><option>До еды</option><option>После еды</option><option>Перед сном</option></select></label>
+      </div>
+      <button class="btn" id="saveGlu">Сохранить замер</button>
+      <p id="gluMsg" class="msg" role="status"></p>
+    </div>
+    <canvas id="chart" height="160" aria-label="График сахара"></canvas>
+    <ul class="list" id="gluList"></ul>
+  </section>
+
+  <!-- ЕДА -->
+  <section id="food" class="screen">
+    <h1>Еда и хлебные единицы</h1>
+    <div class="panel">
+      <p class="muted">1 ХЕ = 12 г углеводов. Сфотографируйте тарелку или выберите продукты вручную.</p>
+      <input id="photo" type="file" accept="image/*" capture="environment" hidden>
+      <button class="btn" id="photoBtn">📷 Сфотографировать еду</button>
+      <img id="preview" alt="Фото блюда" hidden>
+      <p class="msg" id="photoMsg" role="status"></p>
+      <div class="row">
+        <label class="field grow">Продукт<select id="prod"></select></label>
+        <label class="field">Вес, г<input id="grams" type="number" min="1" value="100"></label>
+      </div>
+      <button class="btn ghost" id="addProd">Добавить в приём пищи</button>
+      <ul class="list" id="meal"></ul>
+      <p class="big" id="mealXe">0 ХЕ</p>
+      <button class="btn" id="saveMeal">Сохранить приём пищи</button>
+    </div>
+  </section>
+
+  <!-- ОБУЧЕНИЕ -->
+  <section id="learn" class="screen">
+    <h1>Школа для новичков</h1>
+    <div class="cards" id="lessons"></div>
+  </section>
+
+  <!-- AI -->
+  <section id="ai" class="screen">
+    <h1>AI-помощник DiaLife</h1>
+    <div class="panel">
+      <div class="chat" id="chat" aria-live="polite"></div>
+      <div class="row">
+        <input class="grow" id="q" placeholder="Спросите про сахар, ХЕ, питание...">
+        <button class="btn" id="send">Отправить</button>
+      </div>
+      <p class="muted small">Демо-режим: ответы по готовым правилам. Помощник не заменяет врача и не назначает дозы инсулина.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">© 2026 DiaLife · Учебный прототип. При ухудшении самочувствия обратитесь к врачу.</footer>
+<script src="script.js"></script>
+</body>
+</html>
